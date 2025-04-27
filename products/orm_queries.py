@@ -40,3 +40,41 @@ Products.objects.raw('SELECT * FROM products_products WHERE price > %s', [500])
 #Debugging ORM
 qs = Products.objects.filter(price__gt=500)
 print(qs.query)   # See the generated SQL query
+
+
+# Solve the N+1 Query Problem
+# Bad Practice (creates N+1 queries):
+# products = Products.objects.all()
+# for product in products:
+#     print(product.category.name)
+# Good Practice (only 1 query using select_related):
+#
+# products = Products.objects.select_related('category').all()
+# for product in products:
+#     print(product.category.name)
+# For ManyToMany, use prefetch_related:
+# orders = Order.objects.prefetch_related('products').all()
+# for order in orders:
+#     print(order.products.all())
+
+
+#Test using Django Shell:
+# python manage.py shell
+#
+# from products.models import *
+#
+# # Create Category
+# cat = Category.objects.create(name="Electronics")
+#
+# # Create Product
+# prod = Products.objects.create(name="iPhone 15", price=1200, category=cat)
+#
+# # Create Order
+# order = Order.objects.create()
+# order.products.add(prod)
+#
+# # Access Products inside Order
+# order.products.all()
+#
+# # Access Orders from Product
+# prod.orders.all()
