@@ -50,6 +50,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'products.middleware.logger_middleware.LoggerMiddleware',  # Add this
+    'products.middleware.geo_blocking_middleware.GeoBlockingMiddleware',
+
 ]
 
 ROOT_URLCONF = 'ecommerce_28_march.urls'

@@ -32,6 +32,7 @@ def get_products(request):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
     except Exception as e:
+        print("error", e)
         return Response({"error": "Something went wrong"}, status=500)
 
 # API to get single product by id
@@ -44,10 +45,6 @@ def get_products(request):
 #     except Products.DoesNotExist:
 #         return Response({"error": "Product not found"}, status=404)
 
-# 
-# @api_view(['GET'])
-
-
 # def get_product(request, id):
 #     try:
 #         product = Products.objects.get(id=id)
@@ -57,7 +54,6 @@ def get_products(request):
 #         return Response({"error": "Product not found"}, status=404)
 #     except Exception as e:
 #         return Response({"error": "Something went wrong"}, status=500)
-
 
 # Get single product by ID
 @api_view(['GET'])
